@@ -55,17 +55,18 @@ class SEQUENCER_OT_receive_from_audacity(bpy.types.Operator, ExportHelper):
     def poll(cls, context):
         return context.window_manager.audacity_tools_pipe_available
 
-    def __init__(self):
-        # if file saved, get proper unique name
+    def invoke(self, context, event):
+        """Build a sensible default filename *before* the file‑browser opens."""
         if bpy.data.filepath:
             directory = os.path.dirname(bpy.data.filepath)
-            blend_name = os.path.splitext(os.path.basename(bpy.data.filepath))[0]
-            base_name = "%s_from_audacity.wav" % blend_name
-            base_path = os.path.join(directory, base_name)
-            if os.path.isfile(base_path):
-                self.filepath = get_unique_name_from_dir(directory, base_name)
-            else:
-                self.filepath = base_path
+            blend     = os.path.splitext(os.path.basename(bpy.data.filepath))[0]
+            base      = f"{blend}_from_audacity.wav"
+
+            # avoid “…_001.wav”, “…_002.wav”, … collisions
+            self.filepath = pipe_utilities.get_unique_name_from_dir(directory, base)
+
+        # hand control to the ExportHelper
+        return ExportHelper.invoke(self, context, event)
 
     def execute(self, context):
         # check if pipe available
