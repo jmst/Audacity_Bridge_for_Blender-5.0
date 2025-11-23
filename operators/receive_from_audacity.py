@@ -122,14 +122,14 @@ class SEQUENCER_OT_receive_from_audacity(bpy.types.Operator, ExportHelper):
                 frame_start=sound_start,
                 channel=sound_channel + 1,
             )
-            sequence.sequences_all[new_sound.name].frame_start = sound_start
-            sequence.sequences_all[new_sound.name].frame_final_start = sound_in
-            sequence.sequences_all[new_sound.name].frame_offset_start = sound_offset_in
-            sequence.sequences_all[new_sound.name].frame_final_duration = sound_duration
-            bpy.context.scene.sequence_editor.active_strip = sequence.sequences_all[
+            sequence.strips_all[new_sound.name].frame_start = sound_start
+            sequence.strips_all[new_sound.name].frame_final_start = sound_in
+            sequence.strips_all[new_sound.name].frame_offset_start = sound_offset_in
+            sequence.strips_all[new_sound.name].frame_final_duration = sound_duration
+            bpy.context.scene.sequence_editor.active_strip = sequence.strips_all[
                 new_sound.name
             ]
-            sequence.sequences_all[strip_name].mute = True
+            sequence.strips_all[strip_name].mute = True
         elif mode != "SEQUENCE" and mode != "SELECTION":  # No Strip name, insert at current frame
             seq_ops.sound_strip_add(
                 filepath=self.filepath,
