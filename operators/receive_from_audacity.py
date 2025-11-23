@@ -110,11 +110,11 @@ class SEQUENCER_OT_receive_from_audacity(bpy.types.Operator, ExportHelper):
             props.record_start = -1
             props.record_end = -1
         elif strip_name != "" and mode == "STRIP":
-            sound_start = int(sequence.sequences_all[strip_name].frame_start)
-            sound_in = int(sequence.sequences_all[strip_name].frame_final_start)
-            sound_duration = int(sequence.sequences_all[strip_name].frame_final_duration)
-            sound_offset_in = int(sequence.sequences_all[strip_name].frame_offset_start)
-            sound_channel = int(sequence.sequences_all[strip_name].channel)
+            sound_start = int(sequence.strips_all[strip_name].frame_start)
+            sound_in = int(sequence.strips_all[strip_name].frame_final_start)
+            sound_duration = int(sequence.strips_all[strip_name].frame_final_duration)
+            sound_offset_in = int(sequence.strips_all[strip_name].frame_offset_start)
+            sound_channel = int(sequence.strips_all[strip_name].channel)
 
             new_sound = sequence.sequences.new_sound(
                 name=strip_name,
