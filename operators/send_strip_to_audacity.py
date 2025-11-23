@@ -36,7 +36,8 @@ def set_volume(strip, strip_mode):
         )
     elif scene.animation_data is not None:
         if scene.animation_data.action is not None:
-            all_curves = scene.animation_data.action.fcurves
+            action = scene.animation_data.action
+            all_curves = action.layers[0].strips[0].channelbag(action.slots[0]).fcurves
 
             # attempts to find the keyframes by iterating through all curves in scene
 
