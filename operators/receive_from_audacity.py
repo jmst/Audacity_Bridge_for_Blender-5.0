@@ -116,7 +116,7 @@ class SEQUENCER_OT_receive_from_audacity(bpy.types.Operator, ExportHelper):
             sound_offset_in = int(sequence.strips_all[strip_name].frame_offset_start)
             sound_channel = int(sequence.strips_all[strip_name].channel)
 
-            new_sound = sequence.sequences.new_sound(
+            new_sound = sequence.strips.new_sound(
                 name=strip_name,
                 filepath=self.filepath,
                 frame_start=sound_start,
