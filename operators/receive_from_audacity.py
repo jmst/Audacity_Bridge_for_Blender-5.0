@@ -63,7 +63,7 @@ class SEQUENCER_OT_receive_from_audacity(bpy.types.Operator, ExportHelper):
             base      = f"{blend}_from_audacity.wav"
 
             # avoid “…_001.wav”, “…_002.wav”, … collisions
-            self.filepath = pipe_utilities.get_unique_name_from_dir(directory, base)
+            self.filepath = get_unique_name_from_dir(directory, base)
 
         # hand control to the ExportHelper
         return ExportHelper.invoke(self, context, event)
