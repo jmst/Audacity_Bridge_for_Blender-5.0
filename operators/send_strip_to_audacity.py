@@ -25,7 +25,7 @@ def set_volume(strip, strip_mode):
     mode = props.audacity_mode
     sequence = scene.sequence_editor
     volume = strip.volume
-    name = sequence.sequences_all[strip.name]
+    name = sequence.strips_all[strip.name]
     fade_curve = None  # curve for the fades
 
     if strip.mute == True:
@@ -43,7 +43,7 @@ def set_volume(strip, strip_mode):
             for curve in all_curves:
                 if (
                     curve.data_path
-                    == 'sequence_editor.sequences_all["' + strip.name + '"].volume'
+                    == 'sequence_editor.strips_all["' + strip.name + '"].volume'
                 ):
                     fade_curve = curve
                     if fade_curve:
@@ -56,16 +56,16 @@ def set_volume(strip, strip_mode):
                                 volume = 0.001
                             else:
                                 volume = f.co[1]
-                            sound_start = sequence.sequences_all[
+                            sound_start = sequence.strips_all[
                                 strip.name
                             ].frame_final_start
                             sound_end = (
                                 name.frame_final_start
-                                + sequence.sequences_all[
+                                + sequence.strips_all[
                                     strip.name
                                 ].frame_final_duration
                             )
-                            offset_start = sequence.sequences_all[
+                            offset_start = sequence.strips_all[
                                 strip.name
                             ].frame_offset_start
                             # Fade out will not work on last frame. Audacity cuts it so add/subtract value
@@ -78,7 +78,7 @@ def set_volume(strip, strip_mode):
                             if strip_mode:
                                 pipe_utilities.do_command(
                                     "SetEnvelope: Time="
-                                    + str(frames_to_sec(frame - sequence.sequences_all[strip.name].frame_start))
+                                    + str(frames_to_sec(frame - sequence.strips_all[strip.name].frame_start))
                                     + " Value="
                                     + str(volume)
                                 )
@@ -132,7 +132,7 @@ class SEQUENCER_OT_send_strip_to_audacity(bpy.types.Operator):
         scene = bpy.context.scene
         props = scene.audacity_tools_props
         sequence = scene.sequence_editor
-        name = sequence.sequences_all[strip.name]
+        name = sequence.strips_all[strip.name]
         props.record_start = -1
         props.record_end = -1
 
